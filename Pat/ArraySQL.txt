@@ -1,0 +1,33 @@
+1,0,0,View#
+1,1,0,Top x#
+1,1,1,Per assingment#SELECT TOP <p1Top N = ...p1> (Marks_achieved) AS [Top <p1Top N = ...p1> Marks achieved], (Select Name & " " &Surname from tblUsers where Student_ID = User_ID) AS [Name and Surname] FROM tblReturn R WHERE (R.[Assignment_ID]=<p2Witch Assignment do yo want,enter IDp2>) and  ((SELECT Teacher_ID FROM tblAssignment A WHERE R.Assignment_ID=A.Assignment_ID)=<T_ID>) ORDER BY 1 DESC;
+1,1,2,Sudent avarage#SELECT TOP <p1Top N = ...p1> [Name and Surname], (round(avg([Avarage Mark]))) AS [Top <p1Top N = ...p1> Avarage Mark] FROM (SELECT (Select Name & " " &Surname from tblUsers where Student_ID = User_ID) AS [Name and Surname], (Marks_achieved/(Select Total_marks from tblAssignment A where A.Assignment_ID=R.Assignment_ID)*100) AS [Avarage Mark] FROM tblReturn AS R WHERE (SELECT Teacher_ID FROM tblAssignment A WHERE R.Assignment_ID=A.Assignment_ID)=<T_ID>) GROUP BY [Name and Surname] ORDER BY 2 DESC;
+1,2,0,Bottom x#
+1,2,1,Per assingment#SELECT TOP <p1Bottom N = ...p1> (Marks_achieved) AS [Bottom <p1Bottom N = ...p1> Marks achieved], (Select Name & " " &Surname from tblUsers where Student_ID = User_ID) AS [Name and Surname] FROM tblReturn R WHERE (R.[Assignment_ID]=<p2Witch Assignment do yo want,enter IDp2>) and  ((SELECT Teacher_ID FROM tblAssignment A WHERE R.Assignment_ID=A.Assignment_ID)=<T_ID>) ORDER BY 1;
+1,2,2,Sudent avarage#SELECT TOP <p1Bottom N = ...p1> [Name and Surname], (round(avg([Avarage Mark]))) AS [Bottom <p1Bottom N = ...p1> Avarage Mark] FROM (SELECT (Select Name & " " &Surname from tblUsers where Student_ID = User_ID) AS [Name and Surname], (Marks_achieved/(Select Total_marks from tblAssignment A where A.Assignment_ID=R.Assignment_ID)*100) AS [Avarage Mark] FROM tblReturn AS R WHERE (SELECT Teacher_ID FROM tblAssignment A WHERE R.Assignment_ID=A.Assignment_ID)=<T_ID>) GROUP BY [Name and Surname] ORDER BY 2;
+1,3,0,Avarage#
+1,3,1,of each assingment#SELECT R.Assignment_ID,Assignment_Name,Round( AVG(Marks_achieved)   /Total_marks*100,2) as [Avarge Mark] FROM tblReturn R, tblAssignment A WHERE R.Assignment_ID = A.Assignment_ID and Teacher_ID = <T_ID> GROUP BY R.Assignment_ID,Assignment_Name,Total_marks
+1,3,2,of each student#SELECT U.User_ID,(Surname & " " & Name) as [Surname and Name],Round( AVG(Marks_achieved /Total_marks*100)  ,2) as [Avarge Mark] FROM tblReturn R, tblUsers U, tblAssignment A WHERE R.Assignment_ID = A.Assignment_ID and R.Student_ID=U.User_ID and Teacher_ID = <T_ID> GROUP BY U.User_ID,Surname,Name ORDER BY Surname
+1,3,3,Overall#SELECT Round( AVG(Marks_achieved /Total_marks*100)  ,2) FROM tblAssignment A, tblReturn R WHERE A.Assignment_ID = R.Assignment_ID and Teacher_ID = <T_ID>
+1,4,0,Student#
+1,4,1,Detail#SELECT User_ID,(Surname & " " & Name) as [Surname and Name],Email,Grade FROM tblUsers U, tblRelationship R WHERE U.User_ID = R.Student_ID and Teacher_ID = <T_ID> ORDER BY Surname
+1,4,2,Marks#SELECT R.Assignment_ID,Status,R.Attachment,Round((Marks_achieved / Total_marks*100),2),Date_Completed,Feedback FROM tblReturn R ,tblAssignment A WHERE R.Assignment_ID = A.Assignment_ID and Teacher_ID = <T_ID> and Student_ID = <p1Which student p1>
+1,5,0,Assingments#
+1,5,1,Detail#SELECT * FROM tblAssignment WHERE Teacher_ID = <T_ID> ORDER BY Assignment_ID
+1,6,0,Return#
+1,6,1,Per assingments#SELECT Return_ID,  (Select Name & " " &Surname from tblUsers where Student_ID = User_ID) AS [Name and Surname], Status, Marks_achieved,Date_Completed FROM tblReturn WHERE Assignment_ID = <p1Which Assignment IDp1>
+1,6,2,Per Student#SELECT Return_ID,  (Select Assignment_Name from tblAssignment A where A.Assignment_ID = R.Assignment_ID) AS [Assignment Name], Status, Marks_achieved,Date_Completed FROM tblReturn R WHERE Student_ID = <p1Which student ID = ...p1>
+2,0,0,Search#
+2,1,0,Student#
+2,1,1,Click here to search#SELECT User_ID, (Surname & " " & Name) AS [Surname and Name], Email, Grade FROM tblUsers AS U, tblRelationship AS R WHERE U.User_ID = R.Student_ID and Teacher_ID = <T_ID> and name like "%<p1Search for name or surnamep1>%"
+2,2,0,Assingments#
+2,2,1,Click here to search#SELECT * FROM tblAssignment WHERE Teacher_ID = <T_ID> and Assignment_Name like "%<p1Search for name or surnamep1>%"
+3,0,0,Edit#
+3,1,0,Assingments#
+3,1,1,Instruction#UPDATE tblAssignment SET Instructions = "<p1Enter new instructionp1>" WHERE Assignment_ID = <p2ID of Assignmentp2>
+3,1,2,Assignment Name#UPDATE tblAssignment SET Assignment_Name = "<p1Enter new assignment Namep1>" WHERE Assignment_ID = <p2ID of Assignmentp2>
+4,0,0,Add#
+4,1,0,Assingments#
+4,1,1,Click here to Add#INSERT INTO tblAssignment (Teacher_ID,Total_marks,Instructions,Attachment,Assignment_Name,DateTime_Due) VALUES(<T_ID>,<p1Total Marksp1>,"<p2Instructionp2>","<p3Attachmentp3>","<p4Assignment Namep4>",<p5DateTime Due (Format yyyy/mm/dd)p5>)
+4,2,0,Relationship#
+4,2,1,Click here to Add#INSERT INTO tblRelationship VALUES(<T_ID>,<p1Student IDp1>)
